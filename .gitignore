@@ -1,0 +1,6 @@
+# Repositórios externos (clonar à parte)
+/FreeRTOS/
+/FreeRTOS-Kernel/
+
+# Artefactos de build
+build/

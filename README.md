@@ -13,6 +13,8 @@ Exercícios da formação de FreeRTOS no Raspberry Pi Pico 2 (RP2350, RISC-V), u
   - `main_timer.c` – pratica 1: exercicio 5
   - `main_stack.c` – pratica 1: exercicio 6
 
+> **Nota:** o `CMakeLists.txt` só compila o `main.c`. Para usar um dos exemplos, apaga o sufixo do nome do ficheiro que queres usar (por exemplo, `main_timer.c` → `main.c`), substituindo o `main.c` que lá está.
+
 ## Dependências
 
 A pasta `FreeRTOS-Kernel` não estão incluídas neste repositório. Para compilar, clona o kernel na raiz do repositório:

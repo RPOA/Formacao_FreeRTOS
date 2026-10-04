@@ -84,6 +84,11 @@ ninja
 
 Também podes repetir este processo para outras pastas de exercícios, como `Exercicios/Pratica2` ou `Exercicios/Pratica3`.
 
+## Documentação e referências
+
+- FreeRTOS Kernel Book: https://github.com/FreeRTOS/FreeRTOS-Kernel-Book
+- FreeRTOS Developer Docs: https://www.freertos.org/Documentation/02-Kernel/02-Kernel-features/00-Developer-docs
+
 ## Observações
 
 - Alguns exercícios incluem ficheiros com nomes específicos para cada prática; o nome do ficheiro principal pode ser trocado conforme o exercício a testar.

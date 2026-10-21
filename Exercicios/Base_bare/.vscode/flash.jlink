@@ -1,0 +1,6 @@
+r
+h
+loadfile build/Base_bare.elf
+r
+g
+exit

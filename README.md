@@ -56,6 +56,8 @@ git clone https://github.com/raspberrypi/FreeRTOS-Kernel.git
 
 Os ficheiros de configuração de `Base_free`, `Pratica2` e `Pratica3` procuram o kernel em `../../FreeRTOS-Kernel` a partir da pasta do exercício.
 
+> **Patch obrigatório ao port RISC-V:** o port `RP2350_RISC-V` tem um bug no tick com um só core, e as tasks acordadas por `vTaskDelay` não chegam a correr. Aplica o patch antes de compilar — ver [Exercicios/Base_free/patches/README.md](Exercicios/Base_free/patches/README.md).
+
 ## Como alternar entre exercícios
 
 Em `Base_free`, `Pratica2` e `Pratica3`, o `CMakeLists.txt` está preparado para compilar um ficheiro principal chamado `main.c`. Para testar um exercício concreto:

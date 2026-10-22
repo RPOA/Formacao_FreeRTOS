@@ -12,13 +12,25 @@
             "gdbPath": "${command:raspberry-pi-pico.getGDBPath}",
             "device": "RP2350_RV32_0",
             "interface": "swd",
+            "rtos": "FreeRTOS",
             "serialNumber": "",
             "svdFile": "${userHome}/.pico-sdk/sdk/2.3.1/src/${command:raspberry-pi-pico.getChip}/hardware_regs/${command:raspberry-pi-pico.getChipUppercase}.svd",
             "runToEntryPoint": "main",
             "overrideLaunchCommands": [
                 "monitor reset",
                 "load \"${command:raspberry-pi-pico.launchTargetPath}\""
-            ]
+            ],
+            "rttConfig": {
+                "enabled": true,
+                "address": "auto",
+                "decoders": [
+                    {
+                        "port": 0,
+                        "type": "console",
+                        "label": "RTT"
+                    }
+                ]
+            }
         }
     ]
 }

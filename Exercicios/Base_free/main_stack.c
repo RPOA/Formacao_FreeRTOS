@@ -4,7 +4,8 @@
 #include "task.h"
 #include "queue.h" /* ou semphr.h… */
 
-#define BUTTON_PIN 15
+#define BUTTON_PIN 0
+#define LED_PIN 1
 
 static QueueHandle_t xLedQueue;
 static QueueHandle_t xPeriodQueue;
@@ -39,7 +40,7 @@ static void vLedTask( void *pvParameters )
         /* portMAX_DELAY: só retorna com dados */
         xQueueReceive( xLedQueue, &ulReceived,
                        portMAX_DELAY );
-        gpio_xor_mask( 1u << PICO_DEFAULT_LED_PIN );
+        gpio_xor_mask( 1u << LED_PIN );
     }
 }
 
@@ -87,8 +88,8 @@ static void vStackTask( void *pvParameters )
 int main( void )
 {
     stdio_init_all();
-    gpio_init( PICO_DEFAULT_LED_PIN );
-    gpio_set_dir( PICO_DEFAULT_LED_PIN, GPIO_OUT );
+    gpio_init( LED_PIN );
+    gpio_set_dir( LED_PIN, GPIO_OUT );
 
     xLedQueue = xQueueCreate( 4, sizeof( uint32_t ) );
     configASSERT( xLedQueue != NULL );

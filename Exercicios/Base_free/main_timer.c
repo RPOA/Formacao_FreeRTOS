@@ -5,6 +5,8 @@
 #include "queue.h" /* ou semphr.h… */
 #include "timers.h"
 
+#define LED_PIN 1
+
 static QueueHandle_t xLedQueue;
 static TimerHandle_t xSenderTimer;
 
@@ -25,15 +27,16 @@ static void vLedTask( void *pvParameters )
         /* portMAX_DELAY: só retorna com dados */
         xQueueReceive( xLedQueue, &ulReceived,
                        portMAX_DELAY );
-        gpio_xor_mask( 1u << PICO_DEFAULT_LED_PIN );
+        printf( "Led: %u\n", ulReceived );
+        gpio_xor_mask( 1u << LED_PIN );
     }
 }
 
 int main( void )
 {
     stdio_init_all();
-    gpio_init( PICO_DEFAULT_LED_PIN );
-    gpio_set_dir( PICO_DEFAULT_LED_PIN, GPIO_OUT );
+    gpio_init( LED_PIN );
+    gpio_set_dir( LED_PIN, GPIO_OUT );
 
     xLedQueue = xQueueCreate( 4, sizeof( uint32_t ) );
     configASSERT( xLedQueue != NULL );

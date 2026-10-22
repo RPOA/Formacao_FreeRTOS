@@ -4,6 +4,8 @@
 #include "task.h"
 #include "queue.h" /* ou semphr.h… */
 
+#define LED_PIN 1
+
 static QueueHandle_t xLedQueue;
 
 static void vSenderTask( void *pvParameters )
@@ -14,6 +16,7 @@ static void vSenderTask( void *pvParameters )
     {
         vTaskDelayUntil( &xLastWake,
                          pdMS_TO_TICKS( 500 ) );
+        printf( "Sender\n" );
         ulCount++;
         xQueueSend( xLedQueue, &ulCount, 0 );
     }
@@ -27,7 +30,8 @@ static void vLedTask( void *pvParameters )
         /* portMAX_DELAY: só retorna com dados */
         xQueueReceive( xLedQueue, &ulReceived,
                        portMAX_DELAY );
-        gpio_xor_mask( 1u << PICO_DEFAULT_LED_PIN );
+        printf( "Led\n" );
+        gpio_xor_mask( 1u << LED_PIN );
     }
 }
 
@@ -36,15 +40,15 @@ static void vLedTask( void *pvParameters )
 int main( void )
 {
     stdio_init_all();
-    gpio_init( PICO_DEFAULT_LED_PIN );
-    gpio_set_dir( PICO_DEFAULT_LED_PIN, GPIO_OUT );
-
+    gpio_init( LED_PIN );
+    gpio_set_dir( LED_PIN, GPIO_OUT );
+    
     xLedQueue = xQueueCreate( 4, sizeof( uint32_t ) );
     configASSERT( xLedQueue != NULL );
 
     xTaskCreate( vLedTask, "LED", 256, NULL, 2, NULL );
     xTaskCreate( vSenderTask, "Sender", 256, NULL, 1, NULL );
-
+    
     vTaskStartScheduler();
     
     for( ;; ); /* só chega aqui se faltar heap */

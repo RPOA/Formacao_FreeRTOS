@@ -58,6 +58,15 @@ Os ficheiros de configuração de `Base_free`, `Pratica2` e `Pratica3` procuram 
 
 > **Patch obrigatório ao port RISC-V:** o port `RP2350_RISC-V` tem um bug no tick com um só core, e as tasks acordadas por `vTaskDelay` não chegam a correr. Aplica o patch antes de compilar — ver [Exercicios/Base_free/patches/README.md](Exercicios/Base_free/patches/README.md).
 
+## Debug e flash com SEGGER J-Link
+
+As configurações de debug e flash de `Exercicios/Base_free/.vscode` usam o SEGGER J-Link com um caminho de instalação fixo (`C:/Program Files/SEGGER/JLink_V986a/`). Se o J-Link estiver instalado noutra pasta ou for de outra versão, ajusta esse caminho em:
+
+- `.vscode/launch.json` – propriedade `serverpath` (`JLinkGDBServerCL.exe`)
+- `.vscode/tasks.json` – propriedade `command` da tarefa **Flash (J-Link)** (`JLink.exe`)
+
+Por exemplo, para a versão `V810`, o caminho passa a ser `C:/Program Files/SEGGER/JLink_V810/`.
+
 ## Como alternar entre exercícios
 
 Em `Base_free`, `Pratica2` e `Pratica3`, o `CMakeLists.txt` está preparado para compilar um ficheiro principal chamado `main.c`. Para testar um exercício concreto:

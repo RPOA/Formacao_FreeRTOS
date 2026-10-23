@@ -10,7 +10,7 @@
             "servertype": "jlink",
             "serverpath": "C:/Program Files/SEGGER/JLink_V986a/JLinkGDBServerCL.exe",
             "gdbPath": "${command:raspberry-pi-pico.getGDBPath}",
-            "device": "RP2350A_RV32_0",
+            "device": "RP2350_RV32_0",
             "interface": "swd",
             "serialNumber": "",
             "svdFile": "${userHome}/.pico-sdk/sdk/2.3.1/src/${command:raspberry-pi-pico.getChip}/hardware_regs/${command:raspberry-pi-pico.getChipUppercase}.svd",

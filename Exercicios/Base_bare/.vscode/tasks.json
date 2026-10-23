@@ -2,11 +2,14 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Build",
+            "label": "Compile Project",
             "type": "process",
             "isBuildCommand": true,
             "command": "${userHome}/.pico-sdk/ninja/v1.13.2/ninja",
-            "args": ["-C", "${workspaceFolder}/build"],
+            "args": [
+                "-C",
+                "${workspaceFolder}/build"
+            ],
             "group": "build",
             "presentation": {
                 "reveal": "always",
@@ -22,13 +25,22 @@
             "type": "process",
             "command": "C:/Program Files/SEGGER/JLink_V986a/JLink.exe",
             "args": [
-                "-device", "RP2350A_RV32_0",
-                "-if", "SWD",
-                "-speed", "4000",
-                "-autoconnect", "1",
-                "-NoGui", "1",
-                "-CommandFile", "${workspaceFolder}/.vscode/flash.jlink"
+                "-device",
+                "RP2350_RV32_0",
+                "-if",
+                "SWD",
+                "-speed",
+                "4000",
+                "-autoconnect",
+                "1",
+                "-NoGui",
+                "1",
+                "-CommandFile",
+                "${workspaceFolder}/.vscode/flash.jlink"
             ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
             "problemMatcher": []
         }
     ]

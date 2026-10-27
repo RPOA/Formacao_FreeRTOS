@@ -1,0 +1,6 @@
+r
+h
+loadfile build/Base_free.elf
+r
+g
+exit

@@ -36,7 +36,8 @@ static void vContinuousTask( void *pvParameters )
     vTaskSetApplicationTaskTag( NULL,
             ( TaskHookFunction_t ) pxInfo->ulPin );
     vTaskSetApplicationTaskTag( xTaskGetIdleTaskHandle(), 
-            ( TaskHookFunction_t ) ( 1u << 6 ) ); 
+            ( TaskHookFunction_t ) ( 1u << 6 ) );
+            
     for( ;; )
     {
         pxInfo->ulCount++;
@@ -63,6 +64,12 @@ void vApplicationIdleHook( void )
 int main( void )
 {
     stdio_init_all();
+
+    /* GP2, GP3 e GP6 (idle) como saídas para o analisador lógico */
+    const uint32_t ulPins = xT1.ulPin | xT2.ulPin | ( 1u << 6 );
+    gpio_init_mask( ulPins );
+    gpio_set_dir_out_masked( ulPins );
+    gpio_clr_mask( ulPins );
 
     xTaskCreate( vContinuousTask, "Continuous1", 128,
              &xT1, 1, NULL );

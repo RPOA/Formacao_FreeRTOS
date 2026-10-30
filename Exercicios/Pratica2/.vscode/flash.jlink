@@ -1,6 +1,6 @@
 r
 h
-loadfile build/Base_free.elf
+loadfile build/Pratica2.elf
 r
 g
 exit

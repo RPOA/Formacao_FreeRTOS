@@ -22,7 +22,7 @@ int main( void )
 {
     stdio_init_all();
 
-    xTaskCreate( vGreedyTask, "Greedy", 128,
+    xTaskCreate( vGreedyTask, "Greedy", 254,
              NULL, 1, NULL );
 
     vTaskStartScheduler();

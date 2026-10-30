@@ -2,10 +2,10 @@
 #include "pico/stdlib.h"
 #include "FreeRTOS.h" /* sempre primeiro */
 #include "task.h"
-#include "queue.h"
 #include "timers.h"
 
-#define BUTTON_PIN 15 /* ao GND, pull-up interno */
+#define BUTTON_PIN 0 /* ao GND, pull-up interno */
+#define LED_PIN 1
 
 #define vPrintStringAndNumber( s, n ) printf( "%s %lu\r\n", ( s ), ( unsigned long ) ( n ) )
 void vApplicationTickHook( void ){}
@@ -19,7 +19,7 @@ static void vKeyHitTask( void *pvParameters )
     {
         if( gpio_get( BUTTON_PIN ) == 0 ) /* premido */
         {
-            gpio_put( PICO_DEFAULT_LED_PIN, 1 );
+            gpio_put( LED_PIN, 1 );
             xTimerReset( xBacklightTimer,
                          xShortDelay );
         }
@@ -29,7 +29,7 @@ static void vKeyHitTask( void *pvParameters )
 
 static void prvBacklightTimerCallback( TimerHandle_t xTimer )
 {
-    gpio_put( PICO_DEFAULT_LED_PIN, 0 ); /* apaga */
+    gpio_put( LED_PIN, 0 ); /* apaga */
     vPrintStringAndNumber( "Backlight OFF, tick",
                            xTaskGetTickCount() );
 }
@@ -37,6 +37,8 @@ static void prvBacklightTimerCallback( TimerHandle_t xTimer )
 int main( void )
 {
     stdio_init_all();
+    gpio_init( LED_PIN );
+    gpio_set_dir( LED_PIN, GPIO_OUT );
     gpio_init( BUTTON_PIN );
     gpio_set_dir( BUTTON_PIN, GPIO_IN );
     gpio_pull_up( BUTTON_PIN );

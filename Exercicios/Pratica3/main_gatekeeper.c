@@ -8,7 +8,7 @@
 
 QueueHandle_t xPrintQueue;
 static char *pcStringsToPrint[] = { "Task 1 *********\r\n",
-    "Task 2 -----------…\r\n", "Tick hook ############…\r\n" };
+    "Task 2 -----------\r\n", "Tick hook ############\r\n" };
 
 static void prvStdioGatekeeperTask( void *pv )
 {

@@ -4,7 +4,7 @@
 #include "task.h"
 #include "semphr.h"
 
-#define BUTTON_PIN 15 /* ao GND, pull-up interno */
+#define BUTTON_PIN 0 /* ao GND, pull-up interno */
 #define vPrintString( s ) printf( "%s", ( s ) )
 #define vPrintStringAndNumber( s, n ) \
     printf( "%s %lu\r\n", ( s ), ( unsigned long )( n ) )
@@ -61,6 +61,9 @@ int main( void )
     
     xIntegerQueue = xQueueCreate( 10, sizeof( uint32_t ) );
     xStringQueue = xQueueCreate( 10, sizeof( char * ) );
+    vQueueAddToRegistry( xIntegerQueue, "Integer" );
+    vQueueAddToRegistry( xStringQueue, "String" );
+
     xTaskCreate( vIntegerGenerator, "Integer Generator", 256, NULL, 1, NULL );
     xTaskCreate( vStringPrinter, "String Printer", 256, NULL, 2, NULL );
 

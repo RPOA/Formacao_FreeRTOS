@@ -4,7 +4,7 @@
 #include "task.h"
 #include "timers.h"
 
-#define BUTTON_PIN 15 /* ao GND, pull-up interno */
+#define BUTTON_PIN 0 /* ao GND, pull-up interno */
 
 #define vPrintStringAndNumber( s, n ) printf( "%s %lu\r\n", ( s ), ( unsigned long ) ( n ) )
 
@@ -26,7 +26,7 @@ static void vPeriodicTask( void *pvParameters )
 {
     for( ;; )
     {
-        busy_wait_ms( 1000 ); /* a trabalhar */
+        busy_wait_ms( 5000 ); /* a trabalhar */
         vTaskDelay( pdMS_TO_TICKS( 1000 ) );
     }
 } /* bloqueada */
@@ -41,7 +41,7 @@ int main( void )
         GPIO_IRQ_EDGE_FALL, true, vButtonISR );
         
     xTaskCreate( vPeriodicTask, "Periodic", 512, NULL,
-                configTIMER_TASK_PRIORITY - 1, NULL );
+                configTIMER_TASK_PRIORITY + 1, NULL );
 
     vTaskStartScheduler();
     
@@ -61,4 +61,9 @@ void vApplicationMallocFailedHook( void )
 {
     taskDISABLE_INTERRUPTS();
     for( ;; );
+}
+
+uint64_t ullGetRunTimeCounter( void )
+{
+    return time_us_64();
 }

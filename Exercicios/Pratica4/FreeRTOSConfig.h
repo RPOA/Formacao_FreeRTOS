@@ -22,6 +22,8 @@
 /* Hooks do passo 5 (definidos no main.c) */
 #define configUSE_MALLOC_FAILED_HOOK    1
 #define configCHECK_FOR_STACK_OVERFLOW  1
+#define configRECORD_STACK_HIGH_ADDRESS 1               /* RTOS Views: mostra a stack de cada task */
+#define configQUEUE_REGISTRY_SIZE       4               /* nº máximo de queues/semáforos visíveis */
 
 /* Software timers: exigidos pelo port RP2350 (interop com pico_sync usa
  * event groups + xTimerPendFunctionCallFromISR) */
@@ -33,14 +35,13 @@
 // #define configSUPPORT_PICO_SYNC_INTEROP   0
 // #define configSUPPORT_PICO_TIME_INTEROP   0
 #define configUSE_COUNTING_SEMAPHORES 1
+#define configUSE_MUTEXES 1
 
 /* Funções usadas no exercício */
 #define INCLUDE_vTaskDelay              1
 #define INCLUDE_xTaskDelayUntil         1               /* vTaskDelayUntil() */
 #define INCLUDE_vTaskSuspend            1               /* portMAX_DELAY espera sem limite */
 #define INCLUDE_uxTaskGetStackHighWaterMark 1           /* folga mínima de stack */
-
-#define configUSE_MUTEXES 1
 
 #define configGENERATE_RUN_TIME_STATS 1
 #define configUSE_TRACE_FACILITY 1

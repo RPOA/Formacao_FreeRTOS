@@ -5,7 +5,7 @@
 #include "timers.h"
 #include "semphr.h"
 
-#define BUTTON_PIN 15 /* ao GND, pull-up interno */
+#define BUTTON_PIN 0 /* ao GND, pull-up interno */
 
 #define vPrintString( s ) printf( "%s", ( s ) )
 
@@ -72,4 +72,9 @@ void vApplicationMallocFailedHook( void )
 {
     taskDISABLE_INTERRUPTS();
     for( ;; );
+}
+
+uint64_t ullGetRunTimeCounter( void )
+{
+    return time_us_64();
 }

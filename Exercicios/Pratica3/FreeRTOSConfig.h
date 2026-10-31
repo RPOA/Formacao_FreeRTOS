@@ -25,7 +25,6 @@
 #define configRECORD_STACK_HIGH_ADDRESS 1               /* RTOS Views: mostra a stack de cada task */
 #define configQUEUE_REGISTRY_SIZE       4               /* nº máximo de queues/semáforos visíveis */
 
-
 /* Software timers: exigidos pelo port RP2350 (interop com pico_sync usa
  * event groups + xTimerPendFunctionCallFromISR) */
 #define configUSE_TIMERS                1

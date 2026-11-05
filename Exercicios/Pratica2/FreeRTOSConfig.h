@@ -40,6 +40,8 @@
 #define INCLUDE_xTaskGetIdleTaskHandle 1
 void vTraceIn( void *pvTag );
 void vTraceOut( void *pvTag );
+#define traceTASK_SWITCHED_IN()   vTraceIn( pxCurrentTCB->pxTaskTag )
+#define traceTASK_SWITCHED_OUT()  vTraceOut( pxCurrentTCB->pxTaskTag )
 
 /* Funções usadas no exercício */
 #define INCLUDE_vTaskDelay              1

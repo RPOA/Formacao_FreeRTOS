@@ -27,8 +27,8 @@ typedef struct
     uint32_t ulPin; /* máscara do pino */
 } TaskInfo_t;
 
-static TaskInfo_t xT1 = { 0, 1u << 2 }; /* GP2 */
-static TaskInfo_t xT2 = { 0, 1u << 3 }; /* GP3 */
+static TaskInfo_t xT1 = { 0, 1u << 5 }; /* GP5 */
+static TaskInfo_t xT2 = { 0, 1u << 6 }; /* GP6 */
 
 TaskHandle_t xT2Handle;
 
@@ -38,7 +38,7 @@ static void vTask2( void *pvParameters )
     vTaskSetApplicationTaskTag( NULL,
             ( TaskHookFunction_t ) pxInfo->ulPin );
     vTaskSetApplicationTaskTag( xTaskGetIdleTaskHandle(), 
-            ( TaskHookFunction_t ) ( 1u << 6 ) ); 
+            ( TaskHookFunction_t ) ( 1u << 7 ) ); 
 
     for( ;; ) /* T2, prioridade 1 */
     {
@@ -68,8 +68,8 @@ int main( void )
 {
     stdio_init_all();
 
-    /* GP2, GP3 e GP6 (idle) como saídas para o analisador lógico */
-    const uint32_t ulPins = xT1.ulPin | xT2.ulPin | ( 1u << 6 );
+    /* GP5, GP6 e GP7 (idle) como saídas para o analisador lógico */
+    const uint32_t ulPins = xT1.ulPin | xT2.ulPin | ( 1u << 7 );
     gpio_init_mask( ulPins );
     gpio_set_dir_out_masked( ulPins );
     gpio_clr_mask( ulPins );

@@ -4,10 +4,12 @@
 #include "task.h"
 #include "semphr.h"
 
+#define LED_PIN 1
+
 static SemaphoreHandle_t xMutexUart, xMutexI2C;
 static volatile uint32_t ulCountA, ulCountB;      /* ver no debugger */
 
-uint64_t ullGetRunTimeCounter( void ){}
+uint64_t ullGetRunTimeCounter( void ){ return time_us_64(); }
 
 static void vTaskA( void *pv )      /* prioridade 2 */
 {
@@ -44,7 +46,7 @@ static void vLedTask( void *pv )    /* prioridade 1 */
 {
     for( ;; )
     {
-        gpio_xor_mask( 1u << PICO_DEFAULT_LED_PIN );
+        gpio_xor_mask( 1u << LED_PIN );
         vTaskDelay( pdMS_TO_TICKS( 500 ) );
     }
 }
@@ -52,8 +54,8 @@ static void vLedTask( void *pv )    /* prioridade 1 */
 int main( void )
 {
     stdio_init_all();
-    gpio_init( PICO_DEFAULT_LED_PIN );
-    gpio_set_dir( PICO_DEFAULT_LED_PIN, GPIO_OUT );
+    gpio_init( LED_PIN );
+    gpio_set_dir( LED_PIN, GPIO_OUT );
 
     xMutexUart = xSemaphoreCreateMutex();
     xMutexI2C  = xSemaphoreCreateMutex();

@@ -25,22 +25,21 @@ typedef struct
     uint32_t ulPin; /* máscara do pino */
 } TaskInfo_t;
 
-static TaskInfo_t xT1 = { 0, 1u << 2 }; /* GP2 */
-static TaskInfo_t xT2 = { 0, 1u << 3 }; /* GP3 */
+static TaskInfo_t xT1 = { 0, 1u << 5 }; /* GP5 */
+static TaskInfo_t xT2 = { 0, 1u << 6 }; /* GP6 */
 static uint32_t ulIdleCycleCount = 0;
 static uint32_t ulPeriodicCount = 0;
 
 static void vContinuousTask( void *pvParameters )
 {
     TaskInfo_t *pxInfo = ( TaskInfo_t * ) pvParameters;
-    vTaskSetApplicationTaskTag( NULL,
-            ( TaskHookFunction_t ) pxInfo->ulPin );
-    vTaskSetApplicationTaskTag( xTaskGetIdleTaskHandle(), 
-            ( TaskHookFunction_t ) ( 1u << 6 ) ); 
+    vTaskSetApplicationTaskTag( xTaskGetIdleTaskHandle(),
+            ( TaskHookFunction_t ) ( 1u << 7 ) );
+            
     for( ;; )
     {
         pxInfo->ulCount++;
-        vTaskDelay( pdMS_TO_TICKS( 10 ) );
+        // vTaskDelay( pdMS_TO_TICKS( 10 ) );
     }
 }
 
@@ -64,12 +63,23 @@ int main( void )
 {
     stdio_init_all();
 
+    /* GP5, GP6 e GP7 (idle) como saídas para o analisador lógico */
+    const uint32_t ulPins = xT1.ulPin | xT2.ulPin | ( 1u << 7 );
+    gpio_init_mask( ulPins );
+    gpio_set_dir_out_masked( ulPins );
+    gpio_clr_mask( ulPins );
+
+    TaskHandle_t xH1, xH2;
     xTaskCreate( vContinuousTask, "Continuous1", 128,
-             &xT1, 1, NULL );
+             &xT1, 1, &xH1 );
     xTaskCreate( vContinuousTask, "Continuous2", 128,
-             &xT2, 1, NULL );
-    xTaskCreate( vPeriodicTask, "Periodic", 128,
-             NULL, 2, NULL );
+             &xT2, 1, &xH2 );
+
+    vTaskSetApplicationTaskTag( xH1, ( TaskHookFunction_t ) xT1.ulPin );
+    vTaskSetApplicationTaskTag( xH2, ( TaskHookFunction_t ) xT2.ulPin );
+
+    // xTaskCreate( vPeriodicTask, "Periodic", 128,
+    //          NULL, 2, NULL );
 
     vTaskStartScheduler();
     

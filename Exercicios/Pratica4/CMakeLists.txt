@@ -28,7 +28,7 @@ set(PICO_BOARD pico2 CACHE STRING "Board type")
 # Pull in Raspberry Pi Pico SDK (must be before project)
 include(pico_sdk_import.cmake)
 
-project(Pratica3 C CXX ASM)
+project(Pratica4 C CXX ASM)
 
 # Initialise the Raspberry Pi Pico SDK
 pico_sdk_init()
@@ -42,26 +42,26 @@ include( ${FREERTOS_PORT_PATH}/FreeRTOS_Kernel_import.cmake )
 
 # Add executable. Default name is the project name, version 0.1
 
-add_executable(Pratica3 main.c )
+add_executable(Pratica4 main.c )
 
-pico_set_program_name(Pratica3 "Pratica3")
-pico_set_program_version(Pratica3 "0.1")
+pico_set_program_name(Pratica4 "Pratica4")
+pico_set_program_version(Pratica4 "0.1")
 
 # Modify the below lines to enable/disable output over UART/USB
-pico_enable_stdio_uart(Pratica3 0)
-pico_enable_stdio_usb(Pratica3 0)
-pico_enable_stdio_rtt( Pratica3 1 )
+pico_enable_stdio_uart(Pratica4 0)
+pico_enable_stdio_usb(Pratica4 0)
+pico_enable_stdio_rtt( Pratica4 1 )
 
 
 # Add the standard library to the build
-target_link_libraries(Pratica3
+target_link_libraries(Pratica4
         pico_stdlib
         FreeRTOS-Kernel-Heap4)
 
 # Add the standard include files to the build
-target_include_directories(Pratica3 PRIVATE
+target_include_directories(Pratica4 PRIVATE
         ${CMAKE_CURRENT_LIST_DIR}
 )
 
-pico_add_extra_outputs(Pratica3)
+pico_add_extra_outputs(Pratica4)
 

@@ -30,7 +30,7 @@ static void prvPrintTask( void *pvParameters )
         xSemaphoreTake( xMutex, portMAX_DELAY );
         vPrintString( pcString );
         xSemaphoreGive( xMutex );
-        vTaskDelay( pdMS_TO_TICKS( 2 ) ); /* < 1 linha */
+        vTaskDelay( pdMS_TO_TICKS( 500 ) ); /* < 1 linha */
     }
 }
 

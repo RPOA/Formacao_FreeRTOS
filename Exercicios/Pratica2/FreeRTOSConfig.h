@@ -22,6 +22,7 @@
 /* Hooks do passo 5 (definidos no main.c) */
 #define configUSE_MALLOC_FAILED_HOOK    1
 #define configCHECK_FOR_STACK_OVERFLOW  1
+#define configRECORD_STACK_HIGH_ADDRESS 1               /* RTOS Views: mostra a stack de cada task */
 
 /* Software timers: exigidos pelo port RP2350 (interop com pico_sync usa
  * event groups + xTimerPendFunctionCallFromISR) */
@@ -39,6 +40,8 @@
 #define INCLUDE_xTaskGetIdleTaskHandle 1
 void vTraceIn( void *pvTag );
 void vTraceOut( void *pvTag );
+#define traceTASK_SWITCHED_IN()   vTraceIn( pxCurrentTCB->pxTaskTag )
+#define traceTASK_SWITCHED_OUT()  vTraceOut( pxCurrentTCB->pxTaskTag )
 
 /* Funções usadas no exercício */
 #define INCLUDE_vTaskDelay              1

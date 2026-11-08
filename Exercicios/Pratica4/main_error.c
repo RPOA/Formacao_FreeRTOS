@@ -6,6 +6,8 @@
 #include "semphr.h"
 #include "queue.h"
 
+#define LED_PIN 1
+
 static QueueHandle_t xQ;
 static volatile uint32_t ulTxCount, ulRxCount;
 static volatile BaseType_t xError = pdFALSE;
@@ -38,6 +40,18 @@ static void vConsumerTask( void *pv ) /* prio 2 */
     }
 }
 
+static void vDummyTask( void *pv )
+{
+    uint32_t ulCounter = 0;
+    for( ;; )
+    {
+        if( ++ulCounter < 3 )
+        {
+            vTaskDelay( pdMS_TO_TICKS( 1000 ) );
+        }
+    }
+}
+
 static void prvCheckTimerCallback( TimerHandle_t xT )
 {
     static uint32_t ulLastTx, ulLastRx;
@@ -45,16 +59,22 @@ static void prvCheckTimerCallback( TimerHandle_t xT )
         xTimerChangePeriod( xT, pdMS_TO_TICKS( 200 ), 0 ); /* erro */
     ulLastTx = ulTxCount;
     ulLastRx = ulRxCount;
-    gpio_xor_mask( 1u << PICO_DEFAULT_LED_PIN );
+    gpio_xor_mask( 1u << LED_PIN );
 }
 
 int main( void )
 {
     stdio_init_all();
+    gpio_init( LED_PIN );
+    gpio_set_dir( LED_PIN, GPIO_OUT );
     
     xQ = xQueueCreate( 5, sizeof( uint32_t ) );
     xTimerStart( xTimerCreate( "Check", pdMS_TO_TICKS( 1000 ),
                 pdTRUE, NULL, prvCheckTimerCallback ), 0 );
+
+    xTaskCreate( vProducerTask, "Producer", 256, NULL, 1, NULL );
+    xTaskCreate( vConsumerTask, "Consumer", 256, NULL, 2, NULL );
+    xTaskCreate( vDummyTask, "Dummy", 256, NULL, 3, NULL );
 
     vTaskStartScheduler();
     

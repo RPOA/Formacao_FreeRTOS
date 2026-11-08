@@ -1,0 +1,6 @@
+r
+h
+loadfile build/Pratica4.elf
+r
+g
+exit

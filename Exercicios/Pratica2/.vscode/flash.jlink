@@ -1,0 +1,6 @@
+r
+h
+loadfile build/Pratica2.elf
+r
+g
+exit

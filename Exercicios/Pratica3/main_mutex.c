@@ -23,9 +23,9 @@ static void prvPrintTask( void *pvParameters )
     const char *pcString = ( const char * ) pvParameters;
     for( ;; )
     {
-        xSemaphoreTake( xMutex, portMAX_DELAY );
+        // xSemaphoreTake( xMutex, portMAX_DELAY );
         vPrintString( pcString );
-        xSemaphoreGive( xMutex );
+        // xSemaphoreGive( xMutex );
         vTaskDelay( pdMS_TO_TICKS( 2 ) ); /* < 1 linha */
     }
 }
@@ -35,9 +35,9 @@ int main( void )
     stdio_init_all();
     
     xMutex = xSemaphoreCreateMutex();
-    xTaskCreate( prvPrinttask, "Print1", 512, ( void * )
+    xTaskCreate( prvPrintTask, "Print1", 512, ( void * )
     "Task 1 ***************************************\r\n", 1, NULL );
-    xTaskCreate( prvPrinttask, "Print2", 512, ( void * )
+    xTaskCreate( prvPrintTask, "Print2", 512, ( void * )
     "Task 2 |||||||||||||||||||||||||||||||||||||||\r\n", 2, NULL );
 
     vTaskStartScheduler();

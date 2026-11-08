@@ -4,7 +4,7 @@
 #include "task.h"
 #include "semphr.h"
 
-#define BUTTON_PIN 15 /* ao GND, pull-up interno */
+#define BUTTON_PIN 0 /* ao GND, pull-up interno */
 void vApplicationTickHook( void ){}
 
 static SemaphoreHandle_t xBinarySemaphore;
@@ -29,6 +29,8 @@ static void vHandlerTask( void *pvParameters )
         uint32_t ulUs = time_us_32() - ulIsrTime;
         printf( "Handler: %u us depois da ISR\r\n",
                 ( unsigned ) ulUs );
+        /* simula trabalho lento */
+        busy_wait_ms( 500 );
     }
 }
 
